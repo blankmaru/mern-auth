@@ -24,6 +24,10 @@ if (process.env.NODE_ENV === "production") {
     });
 };
 
+const authRoute = require('./routes/auth');
+
+app.use('/api/users', authRoute);
+
 const port = process.env.PORT || 5000;
 
 app.listen(port);
