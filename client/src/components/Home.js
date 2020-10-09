@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Header } from 'semantic-ui-react'
 
-export default class Home extends Component {
-    render() {
-        return (
-            <div>
-                Home
-            </div>
-        )
-    }
-}
+const Home = () => (
+  <div style={{marginTop: '2rem'}}>
+    <Header size='medium'>Home Page</Header>
+  </div>
+)
+
+export default Home
