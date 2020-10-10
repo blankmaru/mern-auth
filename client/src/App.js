@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
 import {
-  Container,
-  Header,
-  Menu,
-  Button
+  Container
 } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-
-import Auth from './services/auth';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -29,7 +24,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const user = Auth.currentUser();
+    const user = JSON.parse(localStorage.getItem('user'));
 
     if (user) {
       this.setState({
@@ -39,7 +34,7 @@ class App extends Component {
   };
 
   logOut() {
-    Auth.logOut();
+    localStorage.removeItem('user');
     window.location.replace("/");
   };
 

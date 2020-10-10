@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form } from 'semantic-ui-react';
 
-import Auth from '../../services/auth';
+import axios from 'axios';
 
 export default class Register extends Component {
     constructor(props) {
@@ -46,33 +46,19 @@ export default class Register extends Component {
         loading: true
       });
 
-      if (this.state.email !== "" && this.state.password !== "") {
-            Auth.register(
-                this.state.username,
-                this.state.email, 
-                this.state.password
-            )
-          .then(() => {
+      if (this.state.username !== "" && this.state.email !== "" && this.state.password !== "" ) {
+        axios.post('/api/users/register', {
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.password
+        })
+        .then(res => {
             this.props.history.push("/login");
             this.setState({
                 successful: true
             })
             console.log('Register succesful');
-          })
-          .catch(error => {
-            const resMessage =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-  
-            this.setState({
-              loading: false,
-              message: resMessage
-            });
-            console.log(resMessage);
-          })
+        })
       }
     }
   

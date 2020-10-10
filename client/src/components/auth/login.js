@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form } from 'semantic-ui-react';
 
-import Auth from '../../services/auth';
+import axios from 'axios';
 
 export default class Login extends Component {
     constructor(props) {
@@ -39,29 +39,18 @@ export default class Login extends Component {
       });
 
       if (this.state.email !== "" && this.state.password !== "") {
-        Auth.login(this.state.email, this.state.password)
-          .then(() => {
-            this.props.history.push("/profile");
-            window.location.reload();
-          })
-          .catch(error => {
-            const resMessage =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-  
-            this.setState({
-              loading: false,
-              message: resMessage
-            });
-          })
+        axios.post('/api/users/login', {
+          email: this.state.email,
+          password: this.state.password
+        })
+        .then(res => {
+          if (res.data.accessToken) {
+              localStorage.setItem('user', JSON.stringify(res.data));
+          };
+          this.props.history.push("/profile");
+          window.location.reload();
+        })
       }
-
-      this.setState({
-        loading: false
-      });
     }
   
     render() {

@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
 
     // Create User
     const user = new User({
-        name: req.body.name,
+        username: req.body.username,
         email: req.body.email,
         password: hash
     });
@@ -47,6 +47,7 @@ router.post('/login', async (req, res) => {
 
     const validPassword = bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).send({ msg: 'Incorrect password' });
+
 
     const token = jwt.sign({_id: user._id}, config.jwtSecret);
     res.header('auth-token', token).send({

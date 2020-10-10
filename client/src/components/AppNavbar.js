@@ -21,7 +21,9 @@ const AppNavbar = props => {
             ? 
             (<Menu.Item position='right'>
                 <Button color="black">
-                  <Link to="/profile">{props.state.currentUser.username}</Link>
+                  <Link to="/profile">
+                    {props.state.currentUser.username || props.state.currentUser.email}
+                  </Link>
                 </Button>
                 <Button color="black" style={{ marginLeft: '0.5em' }}>
                   <Link to="/" onClick={props.logOut} >Sign Out</Link>
