@@ -15,6 +15,8 @@ import AppNavbar from './components/AppNavbar';
 
 import Home from './components/Home';
 import Register from './components/auth/register';
+import Login from './components/auth/login';
+import Profile from './components/auth/profile';
 
 class App extends Component {
   constructor(props) {
@@ -38,6 +40,7 @@ class App extends Component {
 
   logOut() {
     Auth.logOut();
+    window.location.replace("/");
   };
 
   render() {
@@ -49,6 +52,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/signup" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/profile" component={Profile} />
           </Switch>
         </Container>
 

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+import { Button, Form } from 'semantic-ui-react';
 
 import Auth from '../../services/auth';
 
@@ -39,16 +37,14 @@ export default class Login extends Component {
         message: "",
         loading: true
       });
-  
-      this.form.validateAll();
-  
-      if (this.checkBtn.context._errors.length === 0) {
-          Auth.login(this.state.email, this.state.password).then(
-          () => {
+
+      if (this.state.email !== "" && this.state.password !== "") {
+        Auth.login(this.state.email, this.state.password)
+          .then(() => {
             this.props.history.push("/profile");
             window.location.reload();
-          },
-          error => {
+          })
+          .catch(error => {
             const resMessage =
               (error.response &&
                 error.response.data &&
@@ -60,75 +56,46 @@ export default class Login extends Component {
               loading: false,
               message: resMessage
             });
-          }
-        );
-      } else {
-        this.setState({
-          loading: false
-        });
+          })
       }
+
+      this.setState({
+        loading: false
+      });
     }
   
     render() {
       return (
-        <div className="col-md-12">
-          <div style={{width: '50%', margin: 'auto', marginTop: '2rem'}}>
-            <Form
-              onSubmit={this.handleLogin}
-              ref={c => {
-                this.form = c;
-              }}
-            >
-              <div className="form-group">
+            <Form onSubmit={this.handleLogin}>
+              <Form.Field>
                 <label htmlFor="email">Email</label>
-                <Input
+                <input
                   type="text"
-                  className="form-control"
                   name="email"
                   value={this.state.email}
                   onChange={this.onChangeEmail}
                 />
-              </div>
+              </Form.Field>
   
-              <div className="form-group">
+              <Form.Field>
                 <label htmlFor="password">Password</label>
-                <Input
+                <input
                   type="password"
-                  className="form-control"
                   name="password"
                   value={this.state.password}
                   onChange={this.onChangePassword}
                 />
-              </div>
+              </Form.Field>
   
-              <div className="form-group">
-                <button
+              <Form.Field>
+                <Button
                   className="btn btn-secondary btn-block"
                   disabled={this.state.loading}
                 >
-                  {this.state.loading && (
-                    <span className="spinner-border spinner-border-sm"></span>
-                  )}
-                  <span>Login</span>
-                </button>
-              </div>
-  
-              {this.state.message && (
-                <div className="form-group">
-                  <div className="alert alert-danger" role="alert">
-                    {this.state.message}
-                  </div>
-                </div>
-              )}
-              <CheckButton
-                style={{ display: "none" }}
-                ref={c => {
-                  this.checkBtn = c;
-                }}
-              />
+                  Login
+                </Button>
+              </Form.Field>
             </Form>
-          </div>
-        </div>
       );
     }
   }

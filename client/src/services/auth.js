@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = '/users/';
+const url = 'http://localhost:5000/api/users/';
 
 class Auth {
     register(name, email, password) {
