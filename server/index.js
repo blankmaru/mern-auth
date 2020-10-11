@@ -20,6 +20,12 @@ const authRoute = require('./routes/auth');
 
 app.use('/api/users', authRoute);
 
+app.get('/api/users', (req, res) => {
+    res.send({
+        users: [{ id: 1, name: 'Geddoku'}]
+    });
+});
+
 if (process.env.NODE_ENV === "production") {
     app.use(express.static('client/build'));
 
