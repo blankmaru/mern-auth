@@ -16,6 +16,10 @@ mongoose.connect(config.mongoURI, {
 .then(() => console.log('DB connected'))
 .catch(err => console.error(err));
 
+const authRoute = require('./routes/auth');
+
+app.use('/api/users', authRoute);
+
 if (process.env.NODE_ENV === "production") {
     app.use(express.static('client/build'));
 
@@ -23,10 +27,6 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
     });
 };
-
-const authRoute = require('./routes/auth');
-
-app.use('/api/users', authRoute);
 
 const port = process.env.PORT || 5000;
 
